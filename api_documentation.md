@@ -1,82 +1,243 @@
 # API Documentation
 
-## Overview
-Our API supports network scanning, compliance verification, and reporting.
+This page provides detailed documentation for the APIs used in the **ComplyZense** project. Each endpoint is described with its purpose, request methods, required parameters, and responses.
 
-### Network Scanning Endpoint
-- **URL**: `/scan/network`
-- **Method**: POST
-- **Request Body**: 
+---
+
+## Base URL
+
+The application runs on the following URL:
+
+- **Local**: `http://127.0.0.1:5000`
+- **With ngrok**: `<Your ngrok URL>`
+
+---
+
+## Endpoints
+
+### 1. User Authentication
+
+#### `POST /login`
+**Description:** Logs in a user and starts a session.  
+**Request Parameters:**
+```
+Example
 {
-  "ip_range": "192.168.1.0/24",
-  "scan_depth": "full"
+  "username": "your_username",
+  "password": "your_password"
 }
-- **Response**:
+```
+**Response:**
+Success (200):
+```
+Example
 {
-  "status": "scan_initiated",
-  "scan_id": "12345"
+  "isLoggedIn": true,
+  "username": "your_username"
 }
-- **Logic**: When this endpoint is called, it triggers the backend to start scanning the network range provided. The scan result is stored in a database and associated with a unique scan ID.
+```
+Error (401):
+```
+Example
+{
+  "error": "Invalid credentials"
+}
+```
+
+### `POST /register`
+**Description:** Registers a new user
+**Request Parameters:**
+```
+Example
+{
+  "name": "your_full_name",
+  "username": "your_username",
+  "password": "your_password"
+}
+```
+**Response:**
+Success (200): Redirects to the login page.
+
+Error (400):
+```
+Example
+{
+  "error": "Username already exists"
+}
+```
+### 2. Chat and Session Management
+
+#### `GET /`
+**Description:** Main page
 
 
-### Compliance Verification Endpoint
-- **URL**: `/compliance/verify`
-- **Method**: POST
-- **Request Body**:
+#### `GET /check_login`
+**Description:** Checks if a user is logged in and retrieves their session information. 
+**Response:**
+Success (200):
+```
+Example
 {
-  "scan_id": "12345",
-  "compliance_standard": "GDPR"
+  "isLoggedIn": true,
+  "username": "your_username",
+  "sessionname": "1"
 }
-- **Response**:
-{
-  "compliance_status": "compliant",
-  "violations": []
-}
-- **Logic**: This endpoint will compare the scan results against predefined rules from the specified compliance standard (e.g., GDPR). It returns the compliance status and any violations.
+```
 
-### Alerts
-- **URL**: `/alerts`
-- **Method**: POST
-- **Request Body**:
+#### `POST /process`
+**Description:** Processes user input (message or file) and returns a response.
+**Request Parameters:**
+message (string, optional): A text query from the user.
+file (file, optional): A document to be analyzed.
+```
+Example
 {
-  "alert_type": "unauthorized_access",
-  "threshold_value": "5"
+  "message": "Your question here"
 }
-- **Response**:
+OR
 {
-  "status": "alert_created",
-  "alert_id": "67890"
+  "file":
 }
-- **Logic**: Allows the user to set up different types of alerts (e.g., unauthorized access). These alerts trigger notifications when a violation threshold is reached.
+OR
+{
+  "message": "Your question here"
+  "file":
+}
+```
+**Response:**
+Success (200):
+```
+Example
+{
+  "response": "Generated response from the AI assistant."
+}
+```
+Error (400):
+```
+Example
+{
+  "error": "Invalid file type"
+}
+```
 
-### Retrieve compliance report
-- **URL**: `/reports/{scan_id}`
-- **Method**: GET
-- **Response**:
+#### `GET /get_chat_history`
+**Description:** Retrieves the chat history for the user. 
+**Response:**
+Success (200):
+```
+Example
 {
-  "report_url": "https://example.com/reports/12345.pdf"
+  "success": true,
+  "chat_history": [
+    {
+      "session_id": "abcd1234",
+      "session_name": "1",
+      "message": "What are the ISO 27001 controls?",
+      "response": "ISO 27001 has 114 controls categorized into 14 domains...",
+      "timestamp": "2025-02-06 10:30:00"
+    }
+  ]
 }
-- **Logic**: Fetches the generated report for a specific scan ID. The report includes a summary of network scanning results, compliance status, and detailed violations.
-
-### LLM training
-- **URL**: `/train-LLM`
-- **Method**: POST
-- **Request Body**:
+```
+Error (400):
+```
+Example
 {
-  "policy_name": "NewGDPRPolicy",
-  "policy_text": "Updated compliance rule..."
+  "success": false,
+  "message": "User not logged in"
 }
-- **Response**:
+```
+
+#### `DELETE /clear_chat_history`
+**Description:** Deletes user account and associated data
+**Response:**
+Success (200):
+```
+Example
 {
-  "status": "policy_added",
-  "policy_id": "23456"
+  "success": true,
+  "chat_history": "Session 2 has been deleted"
 }
-- **Logic**: Adds new compliance policies to the system, allowing the LLM to process updated compliance rules.
+```
+Error (400):
+```
+Example
+{
+  "success": False
+  "message: "Error deleting session: 2"
+}
+```
 
-### Authentication
-- **JWT Token**: Required for all requests.
+#### `GET /export_chat_history`
+**Description:** Exports chat history of all sessions, unless specified
+**Response:**
+Success (200):
+```
+Example
+{
+  "SELECT * FROM chat_sessions WHERE user_id = ? AND session_name = ?", 
+                (user_id, session_name_filter)
+}
+```
+Error (400):
+```
+Example
+{
+  "error": "Error generating the chat history file: 2"
+}
+```
 
-### Error Codes
-- **400**: Bad Request
-- **401**: Unauthorized
-- **500**: Server Error
+### 3. Report Generation
+
+#### `POST /report`
+**Description:** Generates a compliance report based on an uploaded document.
+**Request Parameters:**
+```
+Example
+{
+  "file":
+}
+```
+**Response:**
+Success (200):
+Returns the generated report as a downloadable .txt file.
+
+Error (400):
+```
+Example
+{
+  "error": "Invalid file type"
+}
+```
+
+### 4. Account Management
+
+#### `GET /logout`
+**Description:** Logs user out
+**Response:**
+Success (200):
+```
+Example
+{
+  "message": "You have successfully logged out."
+}
+```
+
+#### `DELETE /delete_account`
+**Description:** Deletes user account and associated data
+**Response:**
+Success (200):
+```
+Example
+{
+  "success": true,
+  "message": "Account and all associated data deleted successfully"
+}
+```
+Error (400):
+```
+Example
+{
+  "error": "User not logged in"
+}
+```
