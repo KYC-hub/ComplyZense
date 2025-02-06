@@ -35,60 +35,39 @@ Expected Result : To reply with high quality answers
 
 Pass/ Fail : Pass 
 
-Remarks: Chatbot does not answer questions out of scope, as intended\nAnswer returned are of good quality 
+Remarks: 
+Chatbot does not answer questions out of scope, as intended
+Answer returned are of good quality 
 
 #### Upload File (No Report Generation) 
 
-Test Case
-
-To test if AI can read files and return appropriate replies. 
+Test Case: To test if AI can read files and return appropriate replies. 
   
-Expected Result
+Expected Result: Results should either directly answer questions coupled with the file, or within the file 
 
-Results should either directly answer questions coupled with the file, or within the file 
+Pass/ Fail : Pass 
 
-Pass/ Fail 
-
-Pass 
-
-Remarks 
-
-Works very well on every instance of file tested 
+Remarks : Works very well on every instance of file tested 
 
 #### Upload File (With Report Generation) 
 
-Test Case
+Test Case: To test if AI can return a report of good quality 
 
-To test if AI can return a report of good quality 
+Expected Result: To generate a report of good quality, able to distinguish good policies and bad policies 
 
-Expected Result
+Pass/ Fail: Pass 
 
-To generate a report of good quality, able to distinguish good policies and bad policies 
-
-Pass/ Fail
-
-Pass 
-
-Remarks
-
-Chatbot brings up both good and bad points, provides recommendation and breaks down each point in provided policies 
+Remarks: Chatbot brings up both good and bad points, provides recommendation and breaks down each point in provided policies 
 
 #### Session and History Manipulation 
 
-Test Case
+Test Case: To test if functions, Filter, Delete or Export Sessions work 
 
-To test if functions, Filter, Delete or Export Sessions work 
+Expected Result: Filter should isolate sessions, Delete should delete all sessions but current, Export exports chat history of selected sessions 
 
-Expected Result
-
-Filter should isolate sessions, Delete should delete all sessions but current, Export exports chat history of selected sessions 
-
-Pass/ Fail
-
-Pass 
+Pass/ Fail: Pass 
 
 Remarks
-
 Works very well, Delete will not work if only one current active session 
 
 Filter works fine 
@@ -98,21 +77,17 @@ Export can read file contents in the exported file.
 
 #### Logout and Delete Account 
 
-Test Case
+Test Case: To test if account can be logged out of, and deleted 
 
-To test if account can be logged out of, and deleted 
+Expected Result: Both functions to work 
 
-Expected Result
-
-Both functions to work 
-
-Pass/ Fail
-
-Pass 
+Pass/ Fail: Pass 
 
 Remarks
-
 Logout works 
 
 Delete account works 
+
+
+Overall: On test, all components works perfectly fine and according to plan
 
