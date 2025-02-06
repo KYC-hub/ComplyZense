@@ -19,7 +19,7 @@ The Copilot project automates compliance audits by integrating:
 - **A Fine-Tuned LLM**: Trained on IT compliance standards (ISO 27001 & ISO 27002) for accurate audit evaluations.
 - **A User-Friendly Web Interface**: Built with HTML, CSS, and JavaScript to ensure an intuitive user experience.
 - **A Python (Flask) Backend**: Handles API requests, document processing, and integration with the AI model.
-- **Data Handling & Reporting**: Features automated report generation, real-time compliance checks, and session history management.
+- **Data Handling & Reporting**: Features automated report generation and session history management.
 
 ## Features
 
