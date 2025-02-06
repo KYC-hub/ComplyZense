@@ -1,40 +1,40 @@
 # System Architecture Documentation
 
 ## System Overview
-This architecture comprises three core layers: frontend, backend, and data storage.
+The system architecture is designed to ensure seamless integration between the backend, frontend, and AI components, with a focus on scalability and modularity. The architecture comprises the following components: 
 
 ## Components
-- User Interface (UI):
-The frontend communicates with backend services via RESTful API calls, handling requests and displaying data in dashboards.
+Frontend: 
 
-- API Layer:
-Acts as the intermediary between the UI and backend logic.
-Define endpoints for key functions such as /scan, /compliance/verify, /alerts, and /reports.
+Built using HTML, CSS, and JavaScript to provide a clean, user-friendly interface. 
 
-- Network Scanning Module:
-Uses tools like Nmap to perform network scans and retrieve node data.
-Sends scan results to the compliance module for analysis.
+Enables users to upload documents, view compliance reports, and interact with the AI-powered copilot. 
 
-- Compliance Verification Module:
-Compares scan results to compliance benchmarks stored in the database.
-Uses benchmarks like GDPR, HIPAA, and PDPA for initial validation.
-Triggers alerts for non-compliance and logs results for reporting.
+Backend: 
 
-- LLM Integration:
-Processes policy data and provides recommendations.
-Interacts with the backend to apply compliance policies.
+Developed using Python (Flask framework) to handle API requests and serve as the core processing engine. 
 
-- Database:
-Stores network scan results, compliance data, user profiles, and policies.
-Utilizes secure storage methods to meet data protection requirements.
+AI Model: 
 
-- Alerting and Notification Module:
-Monitors compliance in real-time and triggers alerts for violations.
-Sends alerts through channels (e.g., email, in-app notifications).
+Fine-tuned OpenAI GPT-4o Mini model trained on questions and answers regarding the ISO 27001 and ISO 27002 compliance standards. 
 
-- Report Generation Module:
-Formats compliance and scan results into reports.
-Allows users to download reports in formats like PDF and CSV.
+Supports retrieval-augmented generation (RAG) for evidence classification and compliance validation. 
+
+Database: 
+
+MySQL for structured data storage and retrieval. 
+
+Plans to integrate a vector database (e.g., Pinecone, Qdrant) for efficient retrieval of embedded compliance policies. 
+
+Hosting: 
+
+The application is hosted locally and made accessible via ngrok for secure external access. 
+
+File Handling and OCR: 
+
+Supports document uploads in multiple formats (DOCX, PDF, CSV, Excel). 
+
+OCR functionality for text extraction from scanned documents (under debugging). 
 
 ## Data Flow
 User → Frontend UI → API Layer: Users send requests through the UI, which are routed via the API layer to the backend.
