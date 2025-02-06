@@ -18,41 +18,24 @@ Description of Test: Test 1 of whole system
 
 #### Create Account/Log In Account 
 
-Test Case 
+Test Case : To register for a new account, and log in with said account 
 
-To register for a new account, and log in with said account 
+Expected Result : Account creation successfully registers, and successfully log on 
 
-Expected Result 
+Pass/ Fail : Pass 
 
-Account creation successfully registers, and successfully log on 
-
-Pass/ Fail 
-
-Pass 
-
-Remarks 
-
-Works as planned 
+Remarks : Works as planned 
 
 
 #### Chat Message 
 
-Test Case 
+Test Case : To test if AI can return chat message results after processing user chat requests 
 
-To test if AI can return chat message results after processing user chat requests 
+Expected Result : To reply with high quality answers
 
-Expected Result 
+Pass/ Fail : Pass 
 
-To reply with high quality answers
-
-Pass/ Fail 
-
-Pass 
-
-Remarks
-
-Chatbot does not answer questions out of scope, as intended
-Answer returned are of good quality 
+Remarks: Chatbot does not answer questions out of scope, as intended\nAnswer returned are of good quality 
 
 #### Upload File (No Report Generation) 
 
