@@ -1,7 +1,7 @@
 # Database Schema Documentation
 
 ## ER Diagram
-Refer to SQL Databse Table
+Refer to db.png
 
 ## Tables
 1. Users Table (users) 
