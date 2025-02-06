@@ -1,0 +1,628 @@
+/* Reset margins and padding for all elements */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Global Body styling */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #181818;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #ccc;
+  /* Light text */
+  overflow: hidden;
+}
+
+/* Chatbot container */
+.chatbot {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  /* max-width: 900px;  
+  max-height: 90vh;  */
+  background-color: #2e2e2e;
+  border-radius: 15px;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #444;
+}
+
+/* Header styling for chatbot */
+header {
+  background-color: #00b3b3;
+  color: white;
+  padding: 18px 24px;
+  font-size: 22px;
+  font-weight: 600;
+  text-align: center;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Chatbox container for chatbot messages */
+.chatbox {
+  list-style-type: none;
+  margin: 0;
+  padding: 20px;
+  flex-grow: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.chatbox li {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: flex-start;
+}
+
+.chatbox li p {
+  background-color: #333;
+  color: #ccc;
+  padding: 14px 20px;
+  border-radius: 20px;
+  font-size: 16px;
+  word-wrap: break-word;
+  line-height: 1.6;
+  max-width: 80%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.chatbox .incoming p {
+  background-color: #00b3b3;
+  /* Fresh teal color */
+  color: white;
+  border-radius: 20px 20px 0 20px;
+  margin-left: auto;
+}
+
+/* Chat input area */
+.chat-input {
+  display: flex;
+  align-items: center;
+  padding: 12px 24px;
+  background-color: #222;
+  position: sticky;
+  bottom: 0;
+  z-index: 10;
+  border-top: 1px solid #444;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.2);
+  gap: 12px;
+}
+
+#user-input {
+  width: 100%;
+  padding: 12px 18px;
+  border-radius: 30px;
+  border: 1px solid #444;
+  font-size: 16px;
+  background-color: #333;
+  color: white;
+  margin-right: 12px;
+  resize: vertical;
+  min-height: 45px;
+  max-height: 150px;
+  box-sizing: border-box;
+  transition: border-color 0.3s, height 0.3s ease;
+}
+
+#user-input:focus {
+  border-color: #00b3b3;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 179, 179, 0.5);
+}
+
+/* Send Button */
+#send-btn {
+  background-color: #00b3b3;
+  color: white;
+  font-size: 20px;
+  padding: 12px 18px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  border: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#send-btn:hover {
+  background-color: #007f7f;
+  transform: scale(1.08);
+}
+
+#send-btn:active {
+  background-color: #006666;
+  transform: scale(0.98);
+}
+
+/* File upload section */
+.file-upload-wrapper,
+.generate-report-wrapper {
+  padding: 18px 24px;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #444;
+  background-color: #333;
+  /* Slightly darker background for contrast */
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, transform 0.2s;
+  /* Smooth transition for hover effect */
+}
+
+/* File upload button */
+.file-upload-btn {
+  background-color: #00b3b3;
+  color: white;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  border: none;
+  width: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.generate-report-btn {
+  background-color: #00b3b3;
+  color: white;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  border: none;
+  width: 215px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.file-upload-btn:hover,
+.generate-report-btn:hover {
+  background-color: #009d9d;
+  /* Darker teal for hover effect */
+  transform: translateY(-2px);
+  /* Slight lift on hover */
+}
+
+.file-upload-btn:active,
+.generate-report-btn:active {
+  background-color: #007f7f;
+  transform: translateY(2px);
+
+}
+
+.file-upload-btn input[type="file"] {
+  display: none;
+}
+
+.generate-report-btn input[type="file"] {
+  display: none;
+}
+
+/* File name display */
+#file-name,
+#report-file-name {
+  color: #ccc;
+  font-size: 14px;
+  margin-left: 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+  text-align: left;
+  font-style: italic;
+}
+
+.file-upload-btn::before,
+.generate-report-btn::before {
+  content: "\1F4C2";
+  /* Unicode for a file folder icon */
+  font-size: 18px;
+}
+
+.file-upload-wrapper,
+.generate-report-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* File upload button icon */
+.file-upload-btn::before,
+.generate-report-btn::before {
+  font-size: 18px;
+  margin-right: 8px;
+  /* Space between icon and button text */
+}
+
+#file-name {
+  margin-left: 10px;
+  flex-grow: 1;
+}
+
+#progress-text {
+  font-style: italic;
+}
+
+/* History and Clear History Buttons */
+.buttons {
+  display: flex;
+  justify-content: flex-start;
+  padding: 14px 24px;
+}
+
+button {
+  background-color: #00b3b3;
+  color: white;
+  font-size: 14px;
+  padding: 12px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  border: none;
+  margin-right: 12px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+button:hover {
+  background-color: #007f7f;
+  transform: scale(1.05);
+}
+
+button:active {
+  background-color: #006666;
+  transform: scale(0.98);
+}
+
+/* Side Panel Styling */
+#side-panel {
+  position: fixed;
+  top: 0;
+  right: -350px;  /* Initially hidden off the screen */
+  width: 350px;
+  height: 100%;
+  background-color: #444;
+  padding: 24px;
+  box-shadow: -2px 0 20px rgba(0, 0, 0, 0.3);
+  overflow-y: auto;
+  transition: right 0.4s ease-in-out;  /* More natural transition */
+  border-radius: 15px;
+  z-index: 1000;
+}
+
+#side-panel.open {
+  right: 0; /* Slide in */
+}
+
+/* Chat History List Styling */
+#history-list li {
+  background-color: #333;
+  color: white;
+  padding: 14px 20px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  transition: background-color 0.3s, transform 0.2s ease-in-out; /* Add scale transition */
+}
+
+#history-list li:hover {
+  background-color: #2e2e2e;
+  transform: translateX(5px);  /* Subtle hover effect */
+}
+
+/* Custom Scrollbar Styling */
+#history-panel-content {
+  padding-right: 10px; /* Add a little padding on the right */
+}
+
+/* Custom Scrollbar */
+#side-panel::-webkit-scrollbar {
+  width: 8px;
+}
+
+#side-panel::-webkit-scrollbar-thumb {
+  background-color: #00b3b3;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+#side-panel::-webkit-scrollbar-thumb:hover {
+  background-color: #007f7f; /* Darker teal when hovered */
+}
+
+#side-panel::-webkit-scrollbar-track {
+  background-color: #444;
+  border-radius: 10px;
+}
+
+/* Floating Action Button to Toggle Side Panel */
+#side-panel-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #00b3b3;
+  color: white;
+  font-size: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+#side-panel-toggle:hover {
+  transform: scale(1.1);  /* Slight zoom effect on hover */
+}
+
+#side-panel-toggle:active {
+  transform: scale(0.98);  /* Click shrink effect */
+}
+
+/* Side Panel Header Enhancements */
+.side-panel-header {
+  padding: 20px 24px;
+  background-color: #00b3b3; /* Fresh teal */
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;  /* Space between header and content */
+}
+
+/* Filter, delete & Export Buttons in Side Panel */
+#filter-history-btn,
+#delete-history-btn,
+#export-history-btn-panel {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  background-color: #00b3b3;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+#filter-history-btn:hover,
+#delete-history-btn:hover,
+#export-history-btn-panel:hover {
+  background-color: #007f7f;
+  transform: scale(1.05);
+}
+
+#filter-history-btn:active,
+#delete-history-btn:active,
+#export-history-btn-panel:active {
+  background-color: #006666;
+  transform: scale(0.98);
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+  .chatbot {
+    width: 100%;
+    height: 100%;
+  }
+
+  #side-panel {
+    width: 270px;
+    padding: 15px;
+  }
+
+  #side-panel-toggle {
+    bottom: 15px;
+    right: 15px;
+  }
+
+  #user-input {
+    padding: 12px;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  #send-btn {
+    padding: 10px 12px;
+    font-size: 18px;
+  }
+
+  #side-panel h3 {
+    font-size: 20px;
+  }
+}
+
+/* Add focus effect for input fields */
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid #00b3b3;
+  box-shadow: 0 0 5px rgba(0, 179, 179, 0.5);
+}
+
+/* Login and Register Buttons */
+#Login-btn,
+#Register-btn {
+  position: fixed;
+  top: 5px;
+  right: 100px;
+  margin: 5px;
+  padding: 12px 18px;
+  font-size: 14px;
+  border-radius: 30px;
+  cursor: pointer;
+  background-color: #00b3b3;
+  color: white;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, transform 0.2s;
+  z-index: 1200;
+}
+
+#Login-btn:hover,
+#Register-btn:hover {
+  background-color: #007f7f;
+  transform: scale(1.05);
+}
+
+#Login-btn:active,
+#Register-btn:active {
+  background-color: #006666;
+  transform: scale(0.98);
+}
+
+#Register-btn {
+  Right: 5px;
+  color: white;
+  background-color: black;
+  border: 1px solid white;
+}
+
+#Login-btn {
+  color: black;
+  background-color: white;
+  border: 1px solid grey;
+
+}
+
+#login-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+#login-form {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 40px;
+  /* Increased padding for a larger box */
+  border-radius: 10px;
+  z-index: 1001;
+  text-align: center;
+  color: black;
+  font-weight: 600;
+  border: 1px solid black;
+  width: 400px;
+  height: auto;
+}
+
+#login-form button {
+  margin-top: 20px;
+}
+
+/* User icon and dropdown menu styles */
+/* User Icon Wrapper */
+.user-icon-wrapper {
+  position: fixed;
+  top: 15px;
+  right: 50px;
+  display: inline-block;
+  cursor: pointer;
+  z-index: 1200;
+}
+
+/* User Icon */
+#user-icon {
+  font-size: 40px;
+  color: #444;
+  transition: color 0.3s ease;
+}
+
+#user-icon:hover {
+  color: #007bff; /* Color change on hover */
+}
+
+/* User Dropdown */
+.user-dropdown {
+  display: none;
+  position: absolute;
+  top: 50px; /* Adjusted to give space */
+  right: 0;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 15px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 220px; /* Slightly wider */
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Cleaner font */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none; /* Disable pointer events when hidden */
+}
+
+/* Display the dropdown on hover */
+.user-icon-wrapper:hover .user-dropdown,
+.user-dropdown:hover,
+.user-dropdown.visible {
+  display: block;
+  opacity: 1;
+  transform: translateY(0); /* Smooth transition */
+  pointer-events: auto; /* Enable interaction */
+}
+
+/* Dropdown Item Styles */
+.user-dropdown p {
+  margin: 10px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  transition: color 0.3s ease;
+}
+
+.user-dropdown p:hover {
+  color: #007bff; /* Hover effect for text */
+}
+
+.user-dropdown button {
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.user-dropdown button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px); /* Slight lifting effect */
+}
+
+/* Add some spacing to the button */
+.user-dropdown button:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}

@@ -1,0 +1,11 @@
+Flask
+Flask_Cors
+openai
+openpyxl
+pandas
+pdfplumber
+Pillow
+pytesseract
+python-dotenv
+python_docx
+Werkzeug
