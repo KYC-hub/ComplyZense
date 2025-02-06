@@ -1,10 +1,10 @@
-LLM Training Documentation
+# LLM Training Documentation
 
-Training Data Preparation
+## Training Data Preparation
 
 Refer to ISO_QAS_v6.json, finetune_training.jsonl & finetune_validation.jsonl
 
-Model Training Process
+## Model Training Process
 
 Refer to LLM training.py
 
@@ -18,11 +18,11 @@ Step 4: Split the dataset into 80% training and 20% validation, ensuring proper 
 
 Step 5: Upload the JSONL file to OpenAI and initiate the fine-tuning process.
 
-Evaluation Metrics
+## Evaluation Metrics
 
 Refer to fine_tuned_results.xlsx & finetune_result.png
 
-Sample Outputs
+## Sample Outputs
 
 Example query: "What is ISO?"
 
