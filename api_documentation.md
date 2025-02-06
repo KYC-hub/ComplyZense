@@ -18,7 +18,9 @@ The application runs on the following URL:
 ### 1. User Authentication
 
 #### `POST /login`
+
 **Description:** Logs in a user and starts a session.  
+
 **Request Parameters:**
 ```
 Example
@@ -28,6 +30,7 @@ Example
 }
 ```
 **Response:**
+
 Success (200):
 ```
 Example
@@ -37,6 +40,7 @@ Example
 }
 ```
 Error (401):
+
 ```
 Example
 {
@@ -45,7 +49,9 @@ Example
 ```
 
 ### `POST /register`
+
 **Description:** Registers a new user
+
 **Request Parameters:**
 ```
 Example
@@ -56,6 +62,7 @@ Example
 }
 ```
 **Response:**
+
 Success (200): Redirects to the login page.
 
 Error (400):
@@ -68,12 +75,17 @@ Example
 ### 2. Chat and Session Management
 
 #### `GET /`
-**Description:** Main page
+
+**Description:** Main user interface for the chatbot
+
 
 
 #### `GET /check_login`
-**Description:** Checks if a user is logged in and retrieves their session information. 
+
+**Description:** Checks if a user is logged in and retrieves their session information.
+
 **Response:**
+
 Success (200):
 ```
 Example
@@ -85,9 +97,13 @@ Example
 ```
 
 #### `POST /process`
+
 **Description:** Processes user input (message or file) and returns a response.
+
 **Request Parameters:**
+
 message (string, optional): A text query from the user.
+
 file (file, optional): A document to be analyzed.
 ```
 Example
@@ -105,6 +121,7 @@ OR
 }
 ```
 **Response:**
+
 Success (200):
 ```
 Example
@@ -113,6 +130,7 @@ Example
 }
 ```
 Error (400):
+
 ```
 Example
 {
@@ -121,8 +139,11 @@ Example
 ```
 
 #### `GET /get_chat_history`
+
 **Description:** Retrieves the chat history for the user. 
+
 **Response:**
+
 Success (200):
 ```
 Example
@@ -140,6 +161,7 @@ Example
 }
 ```
 Error (400):
+
 ```
 Example
 {
@@ -149,8 +171,11 @@ Example
 ```
 
 #### `DELETE /clear_chat_history`
+
 **Description:** Deletes user account and associated data
+
 **Response:**
+
 Success (200):
 ```
 Example
@@ -169,8 +194,11 @@ Example
 ```
 
 #### `GET /export_chat_history`
+
 **Description:** Exports chat history of all sessions, unless specified
+
 **Response:**
+
 Success (200):
 ```
 Example
@@ -190,7 +218,9 @@ Example
 ### 3. Report Generation
 
 #### `POST /report`
+
 **Description:** Generates a compliance report based on an uploaded document.
+
 **Request Parameters:**
 ```
 Example
@@ -200,6 +230,7 @@ Example
 ```
 **Response:**
 Success (200):
+
 Returns the generated report as a downloadable .txt file.
 
 Error (400):
@@ -213,8 +244,11 @@ Example
 ### 4. Account Management
 
 #### `GET /logout`
+
 **Description:** Logs user out
+
 **Response:**
+
 Success (200):
 ```
 Example
@@ -224,8 +258,11 @@ Example
 ```
 
 #### `DELETE /delete_account`
+
 **Description:** Deletes user account and associated data
+
 **Response:**
+
 Success (200):
 ```
 Example
