@@ -1,0 +1,304 @@
+{/*LLM Training & Framework Preparation*/}
+
+Framework Preparation:
+•	Text Cleaning: Remove non-compliance-related text (headers, footers, irrelevant metadata).
+•	Tokenization: Tokenize data into smaller segments (e.g., paragraphs, sentences) for easier model processing.
+•	Labeling (if needed): For classification tasks, label data points based on criteria such as “compliant” or “non-compliant.”
+•	Organize data into training and testing sets. A typical split could be 80% training and 20% testing.
+•	For fine-tuning, ensure that data is stored in a format compatible with the chosen framework (e.g., CSV, JSON, or TFRecords).
+
+TFRecords (TensorFlow Records):
+•	Efficient data storage due to it storing data in binary format, which is faster than the text-based counterpart like CSV or JSON
+•	The format is designed to handle large amounts of data in a structured way efficiently, increasing scalability.
+•	This also allows for data compression, reducing storage costs, as well as an built-in features for ensuring integrity of data.
+
+Steps to convert IT compliance framework from PDF to TFRecords:
+1.	Extract Text: Use a PDF parsing library like pdfplumber to extract text from the IT compliance PDF files.
+
+import pdfplumber
+# Open the PDF file
+with pdfplumber.open('it_compliance_standards.pdf') as pdf:
+  text = ''
+  for page in pdf.pages:
+  text += page.extract_text() # Extract text from each page
+
+2.	Clean Data: Remove noise and preprocess the text (e.g., normalization, tokenization).
+
+import re
+
+# Basic text cleaning
+cleaned_text = re.sub(r'\s+', ' ', text) # Remove extra whitespace
+cleaned_text = re.sub(r'\d+', '', cleaned_text) # Remove numbers
+cleaned_text = cleaned_text.lower() # Convert text to lowwercase
+
+3.	Prepare Structured Data: Optionally, split the text into manageable chunks (like paragraphs).
+
+# Splitting text into paragraphs (assuming paragraphs are seperated by new lines)
+paragraphs = cleaned_text.split('\n\n') # Adjust this split logic as necessary
+
+4.	Create TFRecord Examples: Write a function to convert the cleaned text into tf.train.Example format.
+
+import tensorflow as tf
+
+def create_example(text):
+  return tf.train.Example(features=tf.train.Features(feature={
+    'text': tf.train.Feature(
+      bytes_list=tf.train.BytesList(
+        value=[tf.io.encode_base64(text.encode('utf-8')).numpy()]
+      )
+    )
+}))
+
+5.	Write to TFRecord: Store the examples into a .tfrecord file.
+
+def write_to_tfrecord(paragraphs, output_file='it_compliance.tfrecord'):
+  with tf.io.TFRecordWriter(output_file) as writer:
+    for paragraph in paragraphs:
+      writer.write(create_example(paragraph).SerializeToString())
+
+6.	Verify TFRecord: Load and inspect the data using TensorFlow's TFRecordDataset to ensure it is correctly formatted.
+
+# Function to parse TFRecord file
+def parse_tfrecord_fn(tfrecord):
+  # Define the feature schema for the TFRecord file
+  feature_description = {
+    'text': tf.io.FixedLenFeature([], tf.string),
+  }
+  example = tf.io.parse_single_example(tfrecord, feature_description)
+  example['text'] = tf.io.decode_base64(example['text'])
+  return example
+
+# Load and inspect the TFRecord file
+raw_dataset = tf.data.TFRecordDataset('it_compliance.tfrecord')
+parsed_dataset = raw_dataset.map(parse_tfrecord_fn)
+
+for parsed_record in parsed_dataset.take(1):
+  print(parsed_record)
+
+Building the LLM:
+
+Workflow:
+•	Conversational UI: A chatbot interface that interacts with users and passes their responses to the middleware.
+•	Middleware: This component facilitates communication between the conversational agent and the machine learning pipeline and generates compliance reports summarizing security gaps.
+•	Machine Learning Pipeline: Comprised of two stages—information retrieval and compliance classification—both powered by large language models, which process the data and help identify security issues.
+
+Solution architecture:
+
+Free alternative from AWS:
+1. Data Collection and Preprocessing (Amazon S3 and AWS Glue)
+•	Data Storage: Google Drive or Dropbox
+•	Data Preparation: Python + Pandas / Apache Spark (Local)
+2. Data Labeling and Annotation (Amazon SageMaker Ground Truth)
+•	Label Studio or Doccano
+3. Training and Fine-tuning the LLM (Amazon SageMaker (Model Training))
+•	Model Training: Google Colab, Kaggle Notebooks, or Hugging Face Transformers
+4. Experiment Tracking and Hyperparameter Tuning (Amazon SageMaker Experiments)
+•	Weights & Biases or MLflow
+5. Model Evaluation (Amazon SageMaker Debugger)
+•	TensorBoard or Scikit-Learn’s evaluation metrics
+6. Deployment of the Trained Model (Amazon SageMaker Endpoints)
+•	Hugging Face Inference API or Gradio
+7. API Gateway for Model Access (Amazon API Gateway)
+•	FastAPI or Flask
+8. Database for Compliance Storage (Amazon RDS)
+•	SQLite or PostgreSQL (hosted on Supabase or Render)
+9. Monitoring and Logging (Amazon CloudWatch)
+•	Prometheus + Grafana or TensorBoard
+10. Data Security and Privacy (Amazon IAM and KMS)
+•	AES Encryption (Python) or OpenSSL
+
+LLM Training:
+
+Selecting Framework and Libraries:
+Transformers Library: The Hugging Face Transformers library is a powerful tool for working with LLMs. It can be used with PyTorch or TensorFlow. Datasets and Scikit can be used for data manipulation too.
+Install Required Packages: pip install transformers torch tensorflow datasets scikit-learn
+
+Data Loading using TFRecords with TensorFlow:
+1. TFRecordDataset: This reads the TFRecord file.
+2. parse_tfrecord_fn: This function defines how each TFRecord is parsed. Here, it extracts the text field and decodes it from base64 back into a usable string format.
+3. map(): This applies the parse_tfrecord_fn to each element of the dataset.
+Note: If you have other fields (like labels) in the TFRecord, you would add them to the feature_description and process them in the parse_tfrecord_fn.
+
+import tensorflow as tf
+
+# Function to parse TFRecord data
+  def parse_tfrecord_fn(tfrecord):
+    feature_description = {
+      'text': tf.io.FixedLenFeature([], tf.string), # Define text feature
+    }
+    example = tf.io.parse_single_example(tfrecord, feature_description)
+    example['text'] = tf.io.decode_base64(example['text']) # Decode the base64 text 
+    return example
+
+# Load TFRecords data
+raw_dataset = tf.data.TFRecordDataset('it_compliance.tfrecord')
+parsed_dataset = raw_dataset.map(parse_tfrecord_fn)
+
+# Example to iterate and inspect
+for parsed_record in parsed_dataset.take(1):
+print(parsed_record)
+
+Split Data into Training, Validation, and Testing Sets:
+The dataset is first loaded and then split into training, validation, and test sets based on the percentage of the total dataset size.
+
+# Split the dataset (80% training, 10% validation, 10% testing)
+total_size = 10000 # Example size of dataset, adjust as necessary 
+train_size = int(0.8 * total_size)
+val_size = int(0.1 * total_size)
+test_size = total_size - train_size - val_size
+
+# Create datasets
+train_dataset = parsed_dataset.take(train_size)
+val_dataset = parsed_dataset.skip(train_size).take(val_size)
+test_dataset = parsed_dataset.skip(train_size + val_size).take(test_size)
+
+print(f"Training set size: {train_size}") 
+print(f"Validation set size: {val_size}")
+print(f"Testing set size: {test_size}")
+
+1. take(n): This method takes the first n elements of the dataset.
+2. skip(n): This method skips the first n elements, useful for getting the validation and test sets.
+
+For more precise control over the splits (like stratified splitting), you can use the train_test_split function from Scikit-learn after converting the dataset into a list of examples. 
+
+This method uses Scikit-learn’s train_test_split to split the data more flexibly. First, you split the data into training and temp (validation + test) sets, then split the temp data into validation and test sets.
+
+from sklearn.model_selection import train_test_split
+
+# Convert parsed dataset into list of examples
+dataset_list = [parsed_record['text'].numpy().decode() for parsed_record in parsed_dataset]
+
+# Split the data using train_test_split
+train_data, temp_data = train_test_split(dataset_list, test_size=0.2, random_state=42) 
+val_data, test_data = train_test_split(temp_data, test_size=0.5, random_state=42)
+
+print(f"Training data size: {len(train_data)}") 
+print(f"Validation data size: {len(val_data)}") 
+print(f"Testing data size: {len(test_data)}")
+
+1. Training data (70/80%): used to train the machine learning model 
+2. Validation data (15/10%): used to tune the hyperparameters of the model and adjust during the training process.
+3. Testing data (15/10%): used to evaluate the performance of the trained model after it has been fully trained and its hyperparameters have been finalized using the validation set.
+
+Without validation data set:
+When validation data set is removed, the model would rely on testing after training to see its performance, but the tuning of hyperparameters would need to be done manually or with some other method.
+
+import tensorflow as tf
+
+def parse_tfrecord_fn(tfrecord):
+  feature_description = { {
+    'text': tf.io.FixedLenFeature([], tf.string),
+  }
+  example = tf.io.parse_single_example(tfrecord, feature_description)
+  example['text'] = tf.io.decode_base64(example['text'])
+  return example
+
+raw_dataset = tf.data.TFRecordDataset('it_compliance.tfrecord') 
+parsed_dataset = raw_dataset.map(parse_tfrecord_fn)
+
+# Split the dataset (80% training, 20% testing)
+total_size = 10000 # Example size of dataset, adjust as necessary
+train_size = int(0.8 * total_size)
+test_size = total_size - train_size
+
+train_dataset = parsed_dataset.take(train_size)
+test_dataset = parsed_dataset.skip(train_size).take(test_size)
+
+print(f"Training set size: {train_size}")
+print(f"Testing set size: {test_size}")
+
+Fine-Tune the LLM on Compliance Data:
+
+Choose a pre-trained model:
+For classification task, like compliance categorization, use bert-base-uncased 
+For generation task, like generating compliance report, use GPT-2/GPT-3 or similar models from the Hugging Face model hub.
+Unfortunately, GPT-4 models like those used in ChatGPT cannot be fine-tuned by end-users directly (like you would with models from the Hugging Face hub). Instead, GPT-4 leverage OpenAI's API for various tasks.
+
+Set Training Parameters:
+1. Learning Rate: Start with a small learning rate (e.g., 1e-5). If the model is converging too slowly, you can increase it slightly; if it is diverging, reduce it.
+2. Batch Size: The batch size depends on your GPU memory. For smaller GPUs, use a batch size of 16 or 32. If you encounter out-of-memory errors, reduce the batch size.
+3. Epochs: Typically, 3-5 epochs are sufficient for fine-tuning without overfitting. Monitor the performance on the validation set (if available) or directly on the test set if you’re doing a quick trial.
+
+Training Loop:
+The Trainer API in the Hugging Face library simplifies the training process. 
+
+
+from transformers import Trainer, TrainingArguments
+
+# Define training arguments
+training_args = TrainingArguments(
+  output_dir='./results',                                 # Output directory
+  evaluation_strategy="epoch",                            # Evaluate at the end of each epoch
+  learning_rate=learning_rate,                            # Set learning rate
+  per_device_train_batch_size=batch_size,                 # Batch size for training
+  num_train_epochs=epochs,                                # Number of epochs
+  weight_decay=0.01,                                      # Optional: weight decay for regularization
+  logging_dir='./logs',                                   # Directory for logging
+  logging_steps=10,                                       # Log training metrics every 10 steps
+
+# Initialize the Trainer
+trainer = Trainer(
+  model=model,                                            # The pre-trained model
+  args=training_args,                                     # Training arguments
+  train_dataset=train_dataset,                            # Training data
+  eval_dataset=test_dataset,                              # Validation or test data
+  tokenizer-tokenizer,                                    # Tokenizer for preprocessing
+
+# Start fine-tuning
+trainer.train()
+
+Log Metrics:
+During training, log important metrics like accuracy, precision, recall, and F1 score. This helps in evaluating the model’s performance.
+Hugging Face Trainer is used to automatically compute these metrics:
+
+from sklearn.metrics import accuracy_score, precision_recall_fscore_support
+
+def compute_metrics(p):
+  predictions, labels = p
+  preds = predictions.argmax(axis=1) # Get the predicted class 
+  precision, recall, f1, _ = precision_recall_fscore_support( 
+    labels, preds, average='binary'
+  )
+  accuracy = accuracy_score(labels, preds)
+  return {
+    'accuracy': accuracy,
+    'precision': precision,
+    'recall' : recall,
+    'f1': f1
+}
+
+trainer - Trainer(
+  model-model,
+  args=training_args,
+  train_dataset-train_dataset,
+  eval_dataset=test_dataset,
+  tokenizer-tokenizer,
+  compute_metrics=compute_metrics # Add compute_metrics to log metrics
+)
+
+Experimental process:
+The experimentation framework began with a filled-out security questionnaire and a PDF of the NIST 853 policy requirements. 
+The security questionnaire was replicated in Amazon Lex, and a dialogue conversation tree was developed. 
+To generate a sufficient dataset for evaluation and prompt fine-tuning, GPT-3.5 was used to create 100 conversation sessions. 
+After a quality assurance process, a ground truth dataset was produced.
+
+The questionnaire was cross-referenced with NIST standards to map questions to necessary data points and identify the logic for compliance checks. 
+Initial prompts were designed, passed through the model, and assessed using quantitative metrics and expert QA. 
+Feedback from domain experts was incorporated into prompt design, which was then iteratively refined. 
+Since there wasn't enough data for model fine-tuning, the focus was on prompt fine-tuning throughout the experimentation.
+
+References:
+Primary sources: https://www.youtube.com/watch?v=_f4ko9MX0XE
+All codes shown were written in Python.
+
+
+
+
+
+
+
+
+
+
+
+
