@@ -10,9 +10,9 @@ Test Specification ID: T001-0402-2025
 
 Name of Tester           : Ke Yincheng 
 
-Use Case ID                : ComplyZense 
+Use Case ID               : ComplyZense 
 
-Date of Test                : 4th February 2025 
+Date of Test               : 4th February 2025 
 
 Description of Test: Test 1 of whole system 
 
