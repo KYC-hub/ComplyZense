@@ -54,4 +54,4 @@ The Copilot project automates compliance audits by integrating:
 Clone the repository using Git:
 
 ```bash
-git clone https://github.com/<your-username>/ComplyZense.git
+git clone https://github.com/KKYC-hub/ComplyZense.git
