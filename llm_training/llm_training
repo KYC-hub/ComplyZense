@@ -2,8 +2,7 @@
 
 ## Training Data Preparation
 
-1. Collect policies (GDPR, HIPAA) from official sources.
-2. Preprocess: Tokenize, remove PII.
+Refer to dataset.md
 
 ## Model Update Process
 
