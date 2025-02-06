@@ -68,6 +68,10 @@ pip install -r requirements.txt
 ```
 
 ## Usage
+
+#### NOTE ####
+Remember to edit the .env file and add in your own API keys
+
 ### Running the Application Locally
 Start the flask application by running:
 ```bash
