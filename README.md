@@ -55,3 +55,14 @@ Clone the repository using Git:
 
 ```bash
 git clone https://github.com/KKYC-hub/ComplyZense.git
+```
+Alternatively, you can download the repository as a ZIP file and extract it.
+
+Installing Dependencies
+Navigate to the project directory and install the required Python packages:
+
+```bash
+cd ComplyZense
+pip install -r requirements.txt
+```
+
