@@ -59,6 +59,7 @@ git clone https://github.com/KKYC-hub/ComplyZense.git
 Alternatively, you can download the repository as a ZIP file and extract it.
 
 Installing Dependencies
+
 Navigate to the project directory and install the required Python packages:
 
 ```bash
@@ -75,6 +76,7 @@ python app.py
 Open your browser and visit: HTTP://localhost:5000
 
 Using ngrok for External Access (Optional)
+
 Install ngrok and add your authentication token:
 
 ```bash
@@ -88,9 +90,11 @@ ngrok http 5000
 Use the generated public URL to access your app online.
 
 Contributing
+
 Contributions are welcome! If you have suggestions or improvements, please open an issue or submit a pull request. For major changes, please discuss them via the repository’s issues first.
 
 Contact
+
 For any questions or further information, please contact:
 
 ComplyZense - complyzense@gmail.com
