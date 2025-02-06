@@ -1,6 +1,6 @@
 # API Documentation
 
-This page provides detailed documentation for the APIs used in the **ComplyZense** project. Each endpoint is described with its purpose, request methods, required parameters, and responses.
+This page provides detailed documentation for the APIs used in the **ComplyZense** project. Each endpoint is described with its purpose, request methods, required parameters, and responses. Refer to Function(js).docx for a list of all the functions.
 
 ---
 
