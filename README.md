@@ -67,3 +67,36 @@ pip install -r requirements.txt
 ```
 
 ## Usage
+### Running the Application Locally
+Start the flask application by running:
+```bash
+python app.py
+```
+Open your browser and visit: HTTP://localhost:5000
+
+Using ngrok for External Access (Optional)
+Install ngrok and add your authentication token:
+
+```bash
+ngrok config add-authtoken <your-auth-token>
+```
+Expose your local server (assuming it runs on port 5000):
+
+```bash
+ngrok http 5000
+```
+Use the generated public URL to access your app online.
+
+Contributing
+Contributions are welcome! If you have suggestions or improvements, please open an issue or submit a pull request. For major changes, please discuss them via the repository’s issues first.
+
+Contact
+For any questions or further information, please contact:
+
+ComplyZense - complyzense@gmail.com
+
+
+---
+
+Feel free to adjust the content—such as repository links, contact details, or feature descriptions—to suit your project’s specifics. Let us know if you need any further adjustments!
+
