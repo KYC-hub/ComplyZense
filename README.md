@@ -75,25 +75,25 @@ python app.py
 ```
 Open your browser and visit: HTTP://localhost:5000
 
-Using ngrok for External Access (Optional)
+## Using ngrok for External Access (Optional)
 
-Install ngrok and add your authentication token:
+## Install ngrok and add your authentication token:
 
 ```bash
 ngrok config add-authtoken <your-auth-token>
 ```
-Expose your local server (assuming it runs on port 5000):
+## Expose your local server (assuming it runs on port 5000):
 
 ```bash
 ngrok http 5000
 ```
 Use the generated public URL to access your app online.
 
-Contributing
+## Contributing
 
 Contributions are welcome! If you have suggestions or improvements, please open an issue or submit a pull request. For major changes, please discuss them via the repository’s issues first.
 
-Contact
+## Contact
 
 For any questions or further information, please contact:
 
